@@ -1,33 +1,98 @@
 'use client';
 
 import {Button} from '@/components/ui/button';
-import {Calendar} from '@/components/ui/calendar';
 import {Input} from '@/components/ui/input';
-import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import {Textarea} from '@/components/ui/textarea';
-import {cn} from '@/lib/utils';
-import {format} from 'date-fns';
-import {Calendar as CalendarIcon} from 'lucide-react';
 import Image from 'next/image';
-import React from 'react';
+import React, {useState} from 'react';
+import {useForm, Controller} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {z} from 'zod';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import {Card, CardContent} from '@/components/ui/card';
+
+const rsvpFormSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Invalid email address'),
+  phone: z.string().min(1, 'Phone number is required'),
+  attending: z.enum(['yes', 'no'], {required_error: 'Please select an option'}),
+  guests: z
+    .string()
+    .refine(val => !isNaN(parseInt(val, 10)) && parseInt(val, 10) >= 0, {
+      message: 'Number of guests must be a positive number',
+    })
+    .optional()
+    .or(z.literal('')),
+  blessing: z.string().min(1, 'Please leave a blessing'),
+});
+
+type RsvpFormValues = z.infer<typeof rsvpFormSchema>;
+
+const initialBlessings = [
+  {
+    name: 'Aunt Priya',
+    message: 'Wishing you a lifetime of love and happiness. Congratulations!',
+  },
+  {
+    name: 'Rohan & Anjali',
+    message:
+      'May your journey together be as beautiful as your wedding day. So happy for you both!',
+  },
+  {
+    name: 'The Sharma Family',
+    message:
+      'Congratulations on finding your perfect match! Wishing you all the best for the future.',
+  },
+  {
+    name: 'Vikram',
+    message: "So excited to celebrate with you! Cheers to the happy couple!",
+  },
+];
 
 export default function RsvpPage() {
-  const [date, setDate] = React.useState<Date>();
+  const [blessings, setBlessings] = useState(initialBlessings);
+  const form = useForm<RsvpFormValues>({
+    resolver: zodResolver(rsvpFormSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      guests: '0',
+      blessing: '',
+    },
+  });
+
+  const watchAttending = form.watch('attending');
+
+  function onSubmit(data: RsvpFormValues) {
+    if (data.blessing) {
+      setBlessings(prev => [...prev, {name: data.name, message: data.blessing}]);
+    }
+    form.reset();
+  }
 
   return (
     <div className="bg-background text-foreground min-h-screen p-8 md:p-16">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <p className="text-primary font-semibold tracking-widest">CONTACT</p>
+          <p className="text-primary font-semibold tracking-widest">RSVP</p>
           <h1 className="text-4xl md:text-6xl font-serif mt-2">
-            Do you need a unique flower design?
+            Join The Celebration
           </h1>
         </div>
 
@@ -35,140 +100,176 @@ export default function RsvpPage() {
           <div className="w-full h-full relative aspect-[4/5]">
             <Image
               src="https://placehold.co/600x750.png"
-              alt="Woman with flowers"
+              alt="Bride and Groom"
               fill
-              className="object-cover"
-              data-ai-hint="woman flowers"
+              className="object-cover rounded-lg"
+              data-ai-hint="indian bride groom"
             />
           </div>
 
           <div className="flex flex-col gap-8">
-            <h2
-              className="text-5xl md:text-6xl"
-              style={{fontFamily: "'Playfair Display', serif"}}
-            >
-              Get in touch now!
+            <h2 className="text-5xl md:text-6xl font-serif">
+              We can&apos;t wait to see you!
             </h2>
-            <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  NAME
-                </label>
-                <Input id="name" placeholder="Jane Smith" />
-              </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  EMAIL
-                </label>
-                <Input id="email" type="email" placeholder="jane@framer.com" />
-              </div>
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  PHONE
-                </label>
-                <Input id="phone" placeholder="+49" />
-              </div>
-              <div>
-                <label
-                  htmlFor="service"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  SERVICE
-                </label>
-                <Select>
-                  <SelectTrigger id="service">
-                    <SelectValue placeholder="Select..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="wedding">Wedding</SelectItem>
-                    <SelectItem value="funeral">Funeral</SelectItem>
-                    <SelectItem value="corporate">Corporate Event</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <label
-                  htmlFor="date"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  DATE OF THE EVENT
-                </label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={'outline'}
-                      className={cn(
-                        'w-full justify-start text-left font-normal',
-                        !date && 'text-muted-foreground'
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {date ? format(date, 'PPP') : <span>Pick a date</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={date}
-                      onSelect={setDate}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-              <div>
-                <label
-                  htmlFor="budget"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  ESTIMATED BUDGET
-                </label>
-                <Input id="budget" placeholder="Starting at 250€" />
-              </div>
-              <div>
-                <label
-                  htmlFor="occasion"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  EVENT OCCASION (WEDDING, FUNERAL ETC.)
-                </label>
-                <Input id="occasion" placeholder="Wedding" />
-              </div>
-              <div>
-                <label
-                  htmlFor="referral"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  HOW DID YOU HEAR ABOUT ME?
-                </label>
-                <Input id="referral" placeholder="Instagram" />
-              </div>
-              <div className="md:col-span-2">
-                <label
-                  htmlFor="details"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  ANY OTHER DETAILS YOU'D LIKE TO SHARE?
-                </label>
-                <Textarea id="details" placeholder="Type" />
-              </div>
-              <div className="md:col-span-2">
-                <Button type="submit" className="w-full" variant="default">
-                  SUBMIT
-                </Button>
-              </div>
-            </form>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="grid grid-cols-1 md:grid-cols-2 gap-6"
+              >
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>NAME</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Your Name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>EMAIL</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="your@email.com"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>PHONE</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Your Phone Number" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="attending"
+                  render={({field}) => (
+                    <FormItem className="space-y-3">
+                      <FormLabel>WILL YOU BE ATTENDING?</FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                          className="flex space-x-4"
+                        >
+                          <FormItem className="flex items-center space-x-2">
+                            <FormControl>
+                              <RadioGroupItem value="yes" />
+                            </FormControl>
+                            <FormLabel className="font-normal">Yes</FormLabel>
+                          </FormItem>
+                          <FormItem className="flex items-center space-x-2">
+                            <FormControl>
+                              <RadioGroupItem value="no" />
+                            </FormControl>
+                            <FormLabel className="font-normal">No</FormLabel>
+                          </FormItem>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {watchAttending === 'yes' && (
+                  <FormField
+                    control={form.control}
+                    name="guests"
+                    render={({field}) => (
+                      <FormItem>
+                        <FormLabel>HOW MANY GUESTS?</FormLabel>
+                        <FormControl>
+                          <Input type="number" min="0" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+                <div className="md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="blessing"
+                    render={({field}) => (
+                      <FormItem>
+                        <FormLabel>
+                          LEAVE A BLESSING FOR THE BRIDE AND GROOM
+                        </FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Your blessings and wishes..."
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <Button type="submit" className="w-full" variant="default">
+                    SUBMIT RSVP
+                  </Button>
+                </div>
+              </form>
+            </Form>
           </div>
+        </div>
+
+        <div className="mt-24">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-serif">
+              Words of Love
+            </h2>
+            <p className="text-muted-foreground mt-2">
+              From our beloved friends and family
+            </p>
+          </div>
+          <Carousel
+            opts={{
+              align: 'start',
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {blessings.map((blessing, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <div className="p-1 h-full">
+                    <Card className="h-full">
+                      <CardContent className="flex h-full flex-col justify-between p-6">
+                        <p className="text-lg italic">&quot;{blessing.message}&quot;</p>
+                        <p className="text-right font-semibold mt-4 text-primary">
+                          - {blessing.name}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </div>
     </div>

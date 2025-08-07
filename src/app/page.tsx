@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import {Button} from '@/components/ui/button';
+import { Calendar, Clock, Shirt, MapPin } from 'lucide-react';
 
 const GratitudeIcon = () => (
   <svg
@@ -127,6 +128,51 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section className="bg-background text-foreground py-20 md:py-32">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="relative aspect-[4/5] rounded-lg overflow-hidden">
+               <Image
+                  src="https://placehold.co/600x750.png"
+                  alt="Wedding details"
+                  fill
+                  className="object-cover"
+                  data-ai-hint="wedding decoration"
+                />
+            </div>
+            <div className="flex flex-col gap-8">
+              <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold">
+                Details of the Day
+              </p>
+              <h2 className="font-serif text-5xl md:text-7xl">
+                Wedding Details
+              </h2>
+              <div className="space-y-8">
+                <div className="border-b border-border pb-6">
+                  <h3 className="text-2xl font-serif mb-2">The Date & Time</h3>
+                  <p className="text-muted-foreground">
+                    Saturday, 24th August 2024, 4:00 PM Onwards
+                  </p>
+                </div>
+                <div className="border-b border-border pb-6">
+                  <h3 className="text-2xl font-serif mb-2">The Dress Code</h3>
+                  <p className="text-muted-foreground">
+                    Traditional Indian Attire or Formal Western Wear
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-2xl font-serif mb-2">The Location</h3>
+                  <p className="text-muted-foreground">
+                    The Grand Palace, Udaipur, Rajasthan
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </>
   );
 }

@@ -4,6 +4,7 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {Textarea} from '@/components/ui/textarea';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, {useState} from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -88,7 +89,14 @@ export default function RsvpPage() {
 
   return (
     <>
-      <div className="bg-background text-foreground min-h-screen p-8 md:p-16">
+      <header className="absolute top-0 left-0 w-full p-8 z-20">
+        <div className="container mx-auto">
+          <Link href="/" passHref>
+             <span className="text-2xl font-serif text-primary cursor-pointer">EternalEchoes</span>
+          </Link>
+        </div>
+      </header>
+      <div className="bg-background text-foreground min-h-screen pt-32 p-8 md:p-16">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-primary font-semibold tracking-widest">RSVP</p>

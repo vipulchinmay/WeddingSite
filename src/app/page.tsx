@@ -114,6 +114,13 @@ const galleryImages = [
 export default function Home() {
   return (
     <>
+      <header className="absolute top-0 left-0 w-full p-8 z-20">
+        <div className="container mx-auto">
+          <Link href="/" passHref>
+             <span className="text-2xl font-serif text-white cursor-pointer">EternalEchoes</span>
+          </Link>
+        </div>
+      </header>
       <main className="relative min-h-screen">
         <Image
           src="https://placehold.co/1920x1080.png"

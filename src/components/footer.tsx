@@ -49,27 +49,27 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-background text-foreground py-12">
+    <footer className="bg-primary text-primary-foreground py-12">
       <div className="container mx-auto px-4 flex flex-col items-center text-center">
         <h3 className="font-serif text-3xl">EternalEchoes</h3>
-        <p className="text-muted-foreground mt-2">
+        <p className="text-primary-foreground/80 mt-2">
           Celebrating Sarika & Arjun
         </p>
         <div className="flex space-x-6 mt-6">
-          <Button variant="link" className="text-foreground" onClick={scrollToTop}>Home</Button>
+          <Button variant="link" className="text-primary-foreground" onClick={scrollToTop}>Home</Button>
           <Link href="/rsvp" passHref>
-            <Button variant="link" className="text-foreground">RSVP</Button>
+            <Button variant="link" className="text-primary-foreground">RSVP</Button>
           </Link>
         </div>
         <div className="flex space-x-6 mt-6">
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-            <InstagramIcon className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
+            <InstagramIcon className="h-6 w-6 text-primary-foreground/80 hover:text-primary-foreground transition-colors" />
           </a>
           <a href="mailto:info@eternalechoes.com">
-            <MailIcon className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
+            <MailIcon className="h-6 w-6 text-primary-foreground/80 hover:text-primary-foreground transition-colors" />
           </a>
         </div>
-        <p className="text-sm text-muted-foreground mt-8">
+        <p className="text-sm text-primary-foreground/80 mt-8">
           © {new Date().getFullYear()} EternalEchoes. All rights reserved.
         </p>
       </div>

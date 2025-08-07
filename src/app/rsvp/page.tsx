@@ -26,6 +26,9 @@ import {
 import {Card, CardContent} from '@/components/ui/card';
 import Autoplay from 'embla-carousel-autoplay';
 import { Footer } from '@/components/footer';
+import { RsvpFormValues, submitRsvp } from '@/ai/flows/rsvp-flow';
+import { useToast } from '@/hooks/use-toast';
+import { Toaster } from '@/components/ui/toaster';
 
 const rsvpFormSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -42,7 +45,6 @@ const rsvpFormSchema = z.object({
   blessing: z.string().min(1, 'Please leave a blessing'),
 });
 
-type RsvpFormValues = z.infer<typeof rsvpFormSchema>;
 
 const initialBlessings = [
   {
@@ -67,6 +69,7 @@ const initialBlessings = [
 
 export default function RsvpPage() {
   const [blessings, setBlessings] = useState(initialBlessings);
+  const { toast } = useToast();
   const form = useForm<RsvpFormValues>({
     resolver: zodResolver(rsvpFormSchema),
     defaultValues: {
@@ -80,15 +83,29 @@ export default function RsvpPage() {
 
   const watchAttending = form.watch('attending');
 
-  function onSubmit(data: RsvpFormValues) {
-    if (data.blessing) {
-      setBlessings(prev => [...prev, {name: data.name, message: data.blessing}]);
+  async function onSubmit(data: RsvpFormValues) {
+    try {
+      await submitRsvp(data);
+      if (data.blessing) {
+        setBlessings(prev => [...prev, {name: data.name, message: data.blessing}]);
+      }
+      toast({
+        title: 'RSVP Submitted!',
+        description: 'Thank you for your response.',
+      });
+      form.reset();
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'There was an error submitting your RSVP. Please try again.',
+      });
     }
-    form.reset();
   }
 
   return (
     <>
+      <Toaster />
       <header className="absolute top-0 left-0 w-full p-8 z-20">
         <div className="container mx-auto">
           <Link href="/" passHref>
@@ -235,8 +252,8 @@ export default function RsvpPage() {
                     />
                   </div>
                   <div className="md:col-span-2">
-                    <Button type="submit" className="w-full" variant="default">
-                      SUBMIT RSVP
+                    <Button type="submit" className="w-full" variant="default" disabled={form.formState.isSubmitting}>
+                      {form.formState.isSubmitting ? 'SUBMITTING...' : 'SUBMIT RSVP'}
                     </Button>
                   </div>
                 </form>

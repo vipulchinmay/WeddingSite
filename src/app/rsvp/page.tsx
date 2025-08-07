@@ -25,6 +25,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import {Card, CardContent} from '@/components/ui/card';
+import Autoplay from 'embla-carousel-autoplay';
 
 const rsvpFormSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -249,6 +250,12 @@ export default function RsvpPage() {
               align: 'start',
               loop: true,
             }}
+            plugins={[
+              Autoplay({
+                delay: 2000,
+                stopOnInteraction: false,
+              }),
+            ]}
             className="w-full"
           >
             <CarouselContent>

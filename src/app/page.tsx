@@ -8,6 +8,7 @@ import {
   CarouselItem,
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
+import { Footer } from '@/components/footer';
 
 
 const GratitudeIcon = () => (
@@ -350,6 +351,41 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
+      <section className="bg-secondary/30 text-foreground py-20 md:py-32">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold">
+            Venue
+          </p>
+          <h2 className="font-serif text-5xl md:text-7xl mt-4">
+            The Grand Palace
+          </h2>
+          <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+            Join us at the stunning Grand Palace in Udaipur, a venue that mirrors the grandeur of our celebration.
+          </p>
+          <div className="mt-12 aspect-video w-full rounded-lg overflow-hidden border">
+             <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3628.3239843343423!2d73.678238!3d24.57863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3967e564a42376bf%3A0x87634812f8a8e333!2sThe%20Leela%20Palace%20Udaipur!5e0!3m2!1sen!2sin!4v1716386591092!5m2!1sen!2sin"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+           <a
+            href="https://www.google.com/maps/dir/?api=1&destination=The+Grand+Palace,Udaipur,Rajasthan"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button className="mt-8">
+              Get Directions
+            </Button>
+          </a>
+        </div>
+      </section>
+      <Footer />
     </>
   );
 }

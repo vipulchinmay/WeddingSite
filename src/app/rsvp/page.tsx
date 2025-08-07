@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/carousel';
 import {Card, CardContent} from '@/components/ui/card';
 import Autoplay from 'embla-carousel-autoplay';
+import { Footer } from '@/components/footer';
 
 const rsvpFormSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -86,136 +87,59 @@ export default function RsvpPage() {
   }
 
   return (
-    <div className="bg-background text-foreground min-h-screen p-8 md:p-16">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <p className="text-primary font-semibold tracking-widest">RSVP</p>
-          <h1 className="text-4xl md:text-6xl font-serif mt-2">
-            Join The Celebration
-          </h1>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-16 items-start">
-          <div className="w-full h-full relative aspect-[4/5]">
-            <Image
-              src="https://placehold.co/600x750.png"
-              alt="Bride and Groom"
-              fill
-              className="object-cover rounded-lg"
-              data-ai-hint="indian bride groom"
-            />
+    <>
+      <div className="bg-background text-foreground min-h-screen p-8 md:p-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-primary font-semibold tracking-widest">RSVP</p>
+            <h1 className="text-4xl md:text-6xl font-serif mt-2">
+              Join The Celebration
+            </h1>
           </div>
 
-          <div className="flex flex-col gap-8">
-            <h2 className="text-5xl md:text-6xl font-serif">
-              We can&apos;t wait to see you!
-            </h2>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="grid grid-cols-1 md:grid-cols-2 gap-6"
-              >
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({field}) => (
-                    <FormItem>
-                      <FormLabel>NAME</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Your Name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({field}) => (
-                    <FormItem>
-                      <FormLabel>EMAIL</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="your@email.com"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({field}) => (
-                    <FormItem>
-                      <FormLabel>PHONE</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Your Phone Number" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="attending"
-                  render={({field}) => (
-                    <FormItem className="space-y-3">
-                      <FormLabel>WILL YOU BE ATTENDING?</FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                          className="flex space-x-4"
-                        >
-                          <FormItem className="flex items-center space-x-2">
-                            <FormControl>
-                              <RadioGroupItem value="yes" />
-                            </FormControl>
-                            <FormLabel className="font-normal">Yes</FormLabel>
-                          </FormItem>
-                          <FormItem className="flex items-center space-x-2">
-                            <FormControl>
-                              <RadioGroupItem value="no" />
-                            </FormControl>
-                            <FormLabel className="font-normal">No</FormLabel>
-                          </FormItem>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+          <div className="grid md:grid-cols-2 gap-16 items-start">
+            <div className="w-full h-full relative aspect-[4/5]">
+              <Image
+                src="https://placehold.co/600x750.png"
+                alt="Bride and Groom"
+                fill
+                className="object-cover rounded-lg"
+                data-ai-hint="indian bride groom"
+              />
+            </div>
 
-                {watchAttending === 'yes' && (
+            <div className="flex flex-col gap-8">
+              <h2 className="text-5xl md:text-6xl font-serif">
+                We can&apos;t wait to see you!
+              </h2>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                >
                   <FormField
                     control={form.control}
-                    name="guests"
+                    name="name"
                     render={({field}) => (
                       <FormItem>
-                        <FormLabel>HOW MANY GUESTS?</FormLabel>
+                        <FormLabel>NAME</FormLabel>
                         <FormControl>
-                          <Input type="number" min="0" {...field} />
+                          <Input placeholder="Your Name" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                )}
-                <div className="md:col-span-2">
                   <FormField
                     control={form.control}
-                    name="blessing"
+                    name="email"
                     render={({field}) => (
                       <FormItem>
-                        <FormLabel>
-                          LEAVE A BLESSING FOR THE BRIDE AND GROOM
-                        </FormLabel>
+                        <FormLabel>EMAIL</FormLabel>
                         <FormControl>
-                          <Textarea
-                            placeholder="Your blessings and wishes..."
+                          <Input
+                            type="email"
+                            placeholder="your@email.com"
                             {...field}
                           />
                         </FormControl>
@@ -223,58 +147,138 @@ export default function RsvpPage() {
                       </FormItem>
                     )}
                   />
-                </div>
-                <div className="md:col-span-2">
-                  <Button type="submit" className="w-full" variant="default">
-                    SUBMIT RSVP
-                  </Button>
-                </div>
-              </form>
-            </Form>
-          </div>
-        </div>
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({field}) => (
+                      <FormItem>
+                        <FormLabel>PHONE</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Your Phone Number" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="attending"
+                    render={({field}) => (
+                      <FormItem className="space-y-3">
+                        <FormLabel>WILL YOU BE ATTENDING?</FormLabel>
+                        <FormControl>
+                          <RadioGroup
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            className="flex space-x-4"
+                          >
+                            <FormItem className="flex items-center space-x-2">
+                              <FormControl>
+                                <RadioGroupItem value="yes" />
+                              </FormControl>
+                              <FormLabel className="font-normal">Yes</FormLabel>
+                            </FormItem>
+                            <FormItem className="flex items-center space-x-2">
+                              <FormControl>
+                                <RadioGroupItem value="no" />
+                              </FormControl>
+                              <FormLabel className="font-normal">No</FormLabel>
+                            </FormItem>
+                          </RadioGroup>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-        <div className="mt-24">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-serif">
-              Words of Love
-            </h2>
-            <p className="text-muted-foreground mt-2">
-              From our beloved friends and family
-            </p>
-          </div>
-          <Carousel
-            opts={{
-              align: 'start',
-              loop: true,
-            }}
-            plugins={[
-              Autoplay({
-                delay: 4000,
-                stopOnInteraction: false,
-              }),
-            ]}
-            className="w-full"
-          >
-            <CarouselContent>
-              {blessings.map((blessing, index) => (
-                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1 h-full">
-                    <Card className="h-full">
-                      <CardContent className="flex h-full flex-col justify-between p-6">
-                        <p className="text-lg italic">&quot;{blessing.message}&quot;</p>
-                        <p className="text-right font-semibold mt-4 text-primary">
-                          - {blessing.name}
-                        </p>
-                      </CardContent>
-                    </Card>
+                  {watchAttending === 'yes' && (
+                    <FormField
+                      control={form.control}
+                      name="guests"
+                      render={({field}) => (
+                        <FormItem>
+                          <FormLabel>HOW MANY GUESTS?</FormLabel>
+                          <FormControl>
+                            <Input type="number" min="0" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+                  <div className="md:col-span-2">
+                    <FormField
+                      control={form.control}
+                      name="blessing"
+                      render={({field}) => (
+                        <FormItem>
+                          <FormLabel>
+                            LEAVE A BLESSING FOR THE BRIDE AND GROOM
+                          </FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder="Your blessings and wishes..."
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
+                  <div className="md:col-span-2">
+                    <Button type="submit" className="w-full" variant="default">
+                      SUBMIT RSVP
+                    </Button>
+                  </div>
+                </form>
+              </Form>
+            </div>
+          </div>
+
+          <div className="mt-24">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-serif">
+                Words of Love
+              </h2>
+              <p className="text-muted-foreground mt-2">
+                From our beloved friends and family
+              </p>
+            </div>
+            <Carousel
+              opts={{
+                align: 'start',
+                loop: true,
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 4000,
+                  stopOnInteraction: false,
+                }),
+              ]}
+              className="w-full"
+            >
+              <CarouselContent>
+                {blessings.map((blessing, index) => (
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                    <div className="p-1 h-full">
+                      <Card className="h-full">
+                        <CardContent className="flex h-full flex-col justify-between p-6">
+                          <p className="text-lg italic">&quot;{blessing.message}&quot;</p>
+                          <p className="text-right font-semibold mt-4 text-primary">
+                            - {blessing.name}
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }

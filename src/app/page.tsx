@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { Footer } from '@/components/footer';
+import { useState, useEffect } from 'react';
 
 
 const GratitudeIcon = () => (
@@ -110,6 +111,55 @@ const galleryImages = [
   },
 ];
 
+const Countdown = () => {
+  const weddingDate = '2024-11-23T16:00:00';
+  const [timeLeft, setTimeLeft] = useState({
+    weeks: 0,
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date();
+      const wedding = new Date(weddingDate);
+      const difference = wedding.getTime() - now.getTime();
+
+      if (difference > 0) {
+        const totalSeconds = Math.floor(difference / 1000);
+        const totalMinutes = Math.floor(totalSeconds / 60);
+        const totalHours = Math.floor(totalMinutes / 60);
+        const totalDays = Math.floor(totalHours / 24);
+
+        const weeks = Math.floor(totalDays / 7);
+        const days = totalDays % 7;
+        const hours = totalHours % 24;
+        const minutes = totalMinutes % 60;
+        const seconds = totalSeconds % 60;
+
+        setTimeLeft({ weeks, days, hours, minutes, seconds });
+      } else {
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="mt-12 flex justify-center items-center gap-4 md:gap-8">
+      {Object.entries(timeLeft).map(([unit, value]) => (
+        <div key={unit} className="text-center p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+          <p className="text-4xl md:text-6xl font-semibold">{value.toString().padStart(2, '0')}</p>
+          <p className="text-sm uppercase tracking-widest">{unit}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 
 export default function Home() {
   return (
@@ -151,6 +201,7 @@ export default function Home() {
                 </div>
               </Button>
             </Link>
+             <Countdown />
           </div>
         </div>
       </main>
@@ -238,7 +289,7 @@ export default function Home() {
                 <div className="border-b border-border pb-6">
                   <h3 className="text-2xl font-serif mb-2">The Date & Time</h3>
                   <p className="text-muted-foreground">
-                    Saturday, 24th August 2024, 4:00 PM Onwards
+                    Saturday, 23rd November 2024, 4:00 PM Onwards
                   </p>
                 </div>
                 <div className="border-b border-border pb-6">

@@ -78,33 +78,33 @@ const HeartIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 const galleryImages = [
   {
-    src: 'https://placehold.co/500x500.png',
+    src: 'https://i.ibb.co/zhCLmFhW/Whats-App-Image-2025-08-06-at-15-25-16.jpg',
     alt: 'Couple holding hands',
     hint: 'couple hands',
     quote: 'To love and to be loved is to feel the sun from both sides.',
   },
   {
-    src: 'https://placehold.co/500x500.png',
+    src: 'https://i.ibb.co/HTdN6W1h/Whats-App-Image-2025-08-06-at-15-25-18.jpg',
     alt: 'Couple laughing',
     hint: 'couple laughing',
     quote: 'You are my today and all of my tomorrows.',
   },
   {
-    src: 'https://placehold.co/500x500.png',
+    src: 'https://i.ibb.co/gqGdyZZ/Whats-App-Image-2025-08-06-at-15-25-19.jpg',
     alt: 'Wedding rings',
     hint: 'wedding rings',
     quote:
       'A successful marriage requires falling in love many times, always with the same person.',
   },
   {
-    src: 'https://placehold.co/500x500.png',
+    src: 'https://i.ibb.co/n8ZCFcWF/Whats-App-Image-2025-08-06-at-15-24-43.jpg',
     alt: 'Couple under a tree',
     hint: 'couple tree',
     quote:
       'Once in a while, right in the middle of an ordinary life, love gives us a fairy tale.',
   },
   {
-    src: 'https://placehold.co/500x500.png',
+    src: 'https://i.ibb.co/9mXMkDbP/Whats-App-Image-2025-08-06-at-15-24-45-1.jpg',
     alt: 'Couple on a beach',
     hint: 'couple beach',
     quote: 'The best thing to hold onto in life is each other.',
@@ -184,7 +184,7 @@ export default function Home() {
       </header>
       <main className="relative min-h-screen">
         <Image
-          src="https://placehold.co/1920x1080.png"
+          src="https://i.ibb.co/KpS8wrmC/Whats-App-Image-2025-08-06-at-15-24-45.jpg"
           alt="Wedding background"
           fill
           className="object-cover"
@@ -282,7 +282,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div className="relative aspect-[4/5] rounded-lg overflow-hidden">
                <Image
-                  src="https://placehold.co/600x750.png"
+                  src="https://i.ibb.co/SDJQd8gd/couple.jpg"
                   alt="Wedding details"
                   fill
                   className="object-cover"
@@ -329,7 +329,7 @@ export default function Home() {
               <div className="absolute top-0 left-0 w-3/4 h-full bg-secondary/30 rounded-t-full rounded-b-full transform -translate-x-1/4"></div>
               <div className="absolute bottom-0 left-1/4 w-3/4 h-3/4 overflow-hidden rounded-t-full rounded-b-full">
                 <Image
-                  src="https://placehold.co/600x600.png"
+                  src="https://i.ibb.co/n8ZCFcWF/Whats-App-Image-2025-08-06-at-15-24-43.jpg"
                   alt="Sarika"
                   fill
                   className="object-cover"
@@ -359,7 +359,7 @@ export default function Home() {
                <div className="absolute top-0 right-0 w-3/4 h-full bg-secondary/30 rounded-t-full rounded-b-full transform translate-x-1/4"></div>
               <div className="absolute bottom-0 right-1/4 w-3/4 h-3/4 overflow-hidden rounded-t-full rounded-b-full">
                 <Image
-                  src="https://placehold.co/600x600.png"
+                  src="https://i.ibb.co/yFCckJCz/arjun.jpg"
                   alt="Arjun"
                   fill
                   className="object-cover"

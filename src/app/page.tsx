@@ -2,6 +2,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import {Button} from '@/components/ui/button';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
+
 
 const GratitudeIcon = () => (
   <svg
@@ -49,6 +56,42 @@ const ArrowRightIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <path d="m12 5 7 7-7 7" />
   </svg>
 );
+
+const galleryImages = [
+  {
+    src: 'https://placehold.co/500x500.png',
+    alt: 'Couple holding hands',
+    hint: 'couple hands',
+    quote: 'To love and to be loved is to feel the sun from both sides.',
+  },
+  {
+    src: 'https://placehold.co/500x500.png',
+    alt: 'Couple laughing',
+    hint: 'couple laughing',
+    quote: 'You are my today and all of my tomorrows.',
+  },
+  {
+    src: 'https://placehold.co/500x500.png',
+    alt: 'Wedding rings',
+    hint: 'wedding rings',
+    quote:
+      'A successful marriage requires falling in love many times, always with the same person.',
+  },
+  {
+    src: 'https://placehold.co/500x500.png',
+    alt: 'Couple under a tree',
+    hint: 'couple tree',
+    quote:
+      'Once in a while, right in the middle of an ordinary life, love gives us a fairy tale.',
+  },
+  {
+    src: 'https://placehold.co/500x500.png',
+    alt: 'Couple on a beach',
+    hint: 'couple beach',
+    quote: 'The best thing to hold onto in life is each other.',
+  },
+];
+
 
 export default function Home() {
   return (
@@ -192,117 +235,54 @@ export default function Home() {
       </section>
 
       <section className="bg-background text-foreground py-20 md:py-32">
-        <div className="container mx-auto px-4">
-          <div className="mb-12">
-            <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold">
-              Gallery
-            </p>
-            <h2 className="font-serif text-5xl md:text-7xl mt-4">
-              Sweet Memories
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="flex flex-col gap-4 group">
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg">
-                <Image
-                  src="https://placehold.co/800x600.png"
-                  alt="Couple holding hands"
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  data-ai-hint="couple hands"
-                />
-                <div className="absolute bottom-4 left-4 bg-background/80 text-foreground text-xs uppercase px-2 py-1 rounded">
-                  Latest News
-                </div>
-              </div>
-              <h3 className="text-2xl font-serif flex justify-between items-center">
-                <span>To love and to be loved is to feel the sun from both sides.</span>
-                <ArrowRightIcon className="h-6 w-6 text-muted-foreground transition-transform duration-300 group-hover:translate-x-1" />
-              </h3>
-              <div className="h-px bg-border"></div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <div className="flex flex-col gap-3 group">
-                <div className="relative aspect-square w-full overflow-hidden rounded-lg">
-                  <Image
-                    src="https://placehold.co/500x500.png"
-                    alt="Couple laughing"
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    data-ai-hint="couple laughing"
-                  />
-                  <div className="absolute bottom-2 right-2 bg-background/80 text-foreground text-xs uppercase px-2 py-1 rounded">
-                    Wedding
-                  </div>
-                </div>
-                <h3 className="text-xl font-serif flex justify-between items-center">
-                  <span>You are my today and all of my tomorrows.</span>
-                  <ArrowRightIcon className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:translate-x-1" />
-                </h3>
-                <div className="h-px bg-border"></div>
-              </div>
-              <div className="flex flex-col gap-3 group">
-                <div className="relative aspect-square w-full overflow-hidden rounded-lg">
-                  <Image
-                    src="https://placehold.co/500x500.png"
-                    alt="Wedding rings"
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    data-ai-hint="wedding rings"
-                  />
-                   <div className="absolute bottom-2 right-2 bg-background/80 text-foreground text-xs uppercase px-2 py-1 rounded">
-                    Wedding
-                  </div>
-                </div>
-                <h3 className="text-xl font-serif flex justify-between items-center">
-                  <span>A successful marriage requires falling in love many times, always with the same person.</span>
-                  <ArrowRightIcon className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:translate-x-1" />
-                </h3>
-                <div className="h-px bg-border"></div>
-              </div>
-              <div className="flex flex-col gap-3 group">
-                <div className="relative aspect-square w-full overflow-hidden rounded-lg">
-                  <Image
-                    src="https://placehold.co/500x500.png"
-                    alt="Couple under a tree"
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    data-ai-hint="couple tree"
-                  />
-                   <div className="absolute bottom-2 right-2 bg-background/80 text-foreground text-xs uppercase px-2 py-1 rounded">
-                    Blessings
-                  </div>
-                </div>
-                <h3 className="text-xl font-serif flex justify-between items-center">
-                  <span>Once in a while, right in the middle of an ordinary life, love gives us a fairy tale.</span>
-                  <ArrowRightIcon className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:translate-x-1" />
-                </h3>
-                <div className="h-px bg-border"></div>
-              </div>
-              <div className="flex flex-col gap-3 group">
-                <div className="relative aspect-square w-full overflow-hidden rounded-lg">
-                  <Image
-                    src="https://placehold.co/500x500.png"
-                    alt="Couple on a beach"
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    data-ai-hint="couple beach"
-                  />
-                   <div className="absolute bottom-2 right-2 bg-background/80 text-foreground text-xs uppercase px-2 py-1 rounded">
-                    Memories
-                  </div>
-                </div>
-                <h3 className="text-xl font-serif flex justify-between items-center">
-                  <span>The best thing to hold onto in life is each other.</span>
-                  <ArrowRightIcon className="h-5 w-5 text-muted-foreground transition-transform duration-300 group-hover:translate-x-1" />
-                </h3>
-                <div className="h-px bg-border"></div>
-              </div>
-            </div>
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold">
+            Gallery
+          </p>
+          <h2 className="font-serif text-5xl md:text-7xl mt-4">
+            Sweet Memories
+          </h2>
+          <div className="mt-16">
+            <Carousel
+              opts={{
+                align: 'start',
+                loop: true,
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 3000,
+                  stopOnInteraction: false,
+                }),
+              ]}
+              className="w-full"
+            >
+              <CarouselContent>
+                {galleryImages.map((image, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="md:basis-1/2 lg:basis-1/3"
+                  >
+                    <div className="p-2">
+                      <div className="relative aspect-square overflow-hidden rounded-lg">
+                        <Image
+                          src={image.src}
+                          alt={image.alt}
+                          fill
+                          className="object-cover"
+                          data-ai-hint={image.hint}
+                        />
+                      </div>
+                      <p className="mt-4 font-serif text-lg italic text-muted-foreground">
+                        &quot;{image.quote}&quot;
+                      </p>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
         </div>
       </section>
-
     </>
   );
 }

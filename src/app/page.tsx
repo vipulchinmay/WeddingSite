@@ -114,7 +114,6 @@ const galleryImages = [
 const Countdown = () => {
   const weddingDate = '2024-11-23T16:00:00';
   const [timeLeft, setTimeLeft] = useState({
-    weeks: 0,
     days: 0,
     hours: 0,
     minutes: 0,
@@ -131,15 +130,12 @@ const Countdown = () => {
         const totalSeconds = Math.floor(difference / 1000);
         const totalMinutes = Math.floor(totalSeconds / 60);
         const totalHours = Math.floor(totalMinutes / 60);
-        const totalDays = Math.floor(totalHours / 24);
-
-        const weeks = Math.floor(totalDays / 7);
-        const days = totalDays % 7;
+        const days = Math.floor(totalHours / 24);
         const hours = totalHours % 24;
         const minutes = totalMinutes % 60;
         const seconds = totalSeconds % 60;
 
-        setTimeLeft({ weeks, days, hours, minutes, seconds });
+        setTimeLeft({ days, hours, minutes, seconds });
       } else {
         clearInterval(timer);
       }

@@ -21,8 +21,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from '@/components/ui/carousel';
 import {Card, CardContent} from '@/components/ui/card';
 import Autoplay from 'embla-carousel-autoplay';
@@ -252,7 +250,7 @@ export default function RsvpPage() {
             }}
             plugins={[
               Autoplay({
-                delay: 2000,
+                delay: 4000,
                 stopOnInteraction: false,
               }),
             ]}
@@ -274,8 +272,6 @@ export default function RsvpPage() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
           </Carousel>
         </div>
       </div>

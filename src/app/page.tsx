@@ -1,7 +1,13 @@
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 import {Button} from '@/components/ui/button';
-import { Calendar, Clock, Shirt, MapPin } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
 
 const GratitudeIcon = () => (
   <svg
@@ -31,6 +37,39 @@ const GratitudeIcon = () => (
     <path d="M7.67 6.4L7.66 6.39" />
   </svg>
 );
+
+const galleryItems = [
+  {
+    src: 'https://placehold.co/500x500.png',
+    alt: 'Couple holding hands',
+    hint: 'couple hands',
+    quote: "To love and to be loved is to feel the sun from both sides.",
+  },
+  {
+    src: 'https://placehold.co/500x500.png',
+    alt: 'Couple laughing',
+    hint: 'couple laughing',
+    quote: "You are my today and all of my tomorrows.",
+  },
+  {
+    src: 'https://placehold.co/500x500.png',
+    alt: 'Wedding rings',
+    hint: 'wedding rings',
+    quote: "A successful marriage requires falling in love many times, always with the same person.",
+  },
+  {
+    src: 'https://placehold.co/500x500.png',
+    alt: 'Couple under a tree',
+    hint: 'couple tree',
+    quote: "Once in a while, right in the middle of an ordinary life, love gives us a fairy tale.",
+  },
+  {
+    src: 'https://placehold.co/500x500.png',
+    alt: 'Couple on a beach',
+    hint: 'couple beach',
+    quote: "The best thing to hold onto in life is each other.",
+  },
+];
 
 export default function Home() {
   return (
@@ -169,6 +208,53 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-background text-foreground py-20 md:py-32">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold">
+            Gallery
+          </p>
+          <h2 className="font-serif text-5xl md:text-7xl mt-4">
+            Sweet Memories
+          </h2>
+          <div className="mt-16">
+            <Carousel
+              opts={{
+                align: 'start',
+                loop: true,
+              }}
+              plugins={[
+                Autoplay({
+                  delay: 3000,
+                  stopOnInteraction: false,
+                }),
+              ]}
+              className="w-full"
+            >
+              <CarouselContent>
+                {galleryItems.map((item, index) => (
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                    <div className="p-2">
+                      <div className="relative aspect-square overflow-hidden rounded-lg">
+                        <Image
+                          src={item.src}
+                          alt={item.alt}
+                          fill
+                          className="object-cover"
+                          data-ai-hint={item.hint}
+                        />
+                      </div>
+                      <p className="mt-4 font-serif text-lg italic text-muted-foreground">
+                        &quot;{item.quote}&quot;
+                      </p>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
         </div>
       </section>

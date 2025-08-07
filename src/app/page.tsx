@@ -113,6 +113,7 @@ const galleryImages = [
 
 const Countdown = () => {
   const weddingDate = '2025-11-23T16:00:00';
+  
   const calculateTimeLeft = () => {
     const difference = +new Date(weddingDate) - +new Date();
     let timeLeft = {};
@@ -129,16 +130,24 @@ const Countdown = () => {
     return timeLeft;
   };
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [timeLeft, setTimeLeft] = useState({});
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    setIsClient(true);
+    setTimeLeft(calculateTimeLeft());
+    
+    const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
-    return () => clearTimeout(timer);
-  });
+    return () => clearInterval(timer);
+  }, []);
 
+  if (!isClient) {
+    return null;
+  }
+  
   const timerComponents: JSX.Element[] = [];
 
   Object.keys(timeLeft).forEach((interval) => {
@@ -148,7 +157,7 @@ const Countdown = () => {
 
     timerComponents.push(
       <div key={interval} className="text-center p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
-        <p className="text-4xl md:text-6xl font-semibold">{timeLeft[interval as keyof typeof timeLeft].toString().padStart(2, '0')}</p>
+        <p className="text-4xl md:text-6xl font-semibold">{(timeLeft[interval as keyof typeof timeLeft] || 0).toString().padStart(2, '0')}</p>
         <p className="text-sm uppercase tracking-widest">{interval}</p>
       </div>
     );

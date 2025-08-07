@@ -7,19 +7,8 @@
  */
 
 import { ai } from '@/ai/genkit';
+import { rsvpFormSchema } from '@/lib/schemas';
 import { z } from 'genkit';
-
-export const rsvpFormSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().min(1, 'Phone number is required'),
-  attending: z.enum(['yes', 'no']),
-  guests: z
-    .string()
-    .optional()
-    .or(z.literal('')),
-  blessing: z.string().min(1, 'Please leave a blessing'),
-});
 
 export type RsvpFormValues = z.infer<typeof rsvpFormSchema>;
 

@@ -29,21 +29,7 @@ import { Footer } from '@/components/footer';
 import { RsvpFormValues, submitRsvp } from '@/ai/flows/rsvp-flow';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
-
-const rsvpFormSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  email: z.string().email('Invalid email address'),
-  phone: z.string().min(1, 'Phone number is required'),
-  attending: z.enum(['yes', 'no'], {required_error: 'Please select an option'}),
-  guests: z
-    .string()
-    .refine(val => !isNaN(parseInt(val, 10)) && parseInt(val, 10) >= 0, {
-      message: 'Number of guests must be a positive number',
-    })
-    .optional()
-    .or(z.literal('')),
-  blessing: z.string().min(1, 'Please leave a blessing'),
-});
+import { rsvpFormSchema } from '@/lib/schemas';
 
 
 const initialBlessings = [

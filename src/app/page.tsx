@@ -57,6 +57,23 @@ const ArrowRightIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const HeartIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    {...props}
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+  </svg>
+);
+
 const galleryImages = [
   {
     src: 'https://placehold.co/500x500.png',
@@ -228,6 +245,56 @@ export default function Home() {
                     The Grand Palace, Udaipur, Rajasthan
                   </p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-background text-foreground py-20 md:py-32 overflow-hidden">
+        <div className="container mx-auto px-4">
+          {/* Bride's Message */}
+          <div className="grid md:grid-cols-2 gap-16 items-center mb-24">
+            <div className="relative h-[500px] md:h-[600px]">
+              <div className="absolute top-0 left-0 w-3/4 h-full bg-secondary/30 rounded-t-full rounded-b-full transform -translate-x-1/4"></div>
+              <div className="absolute bottom-0 left-1/4 w-3/4 h-3/4 overflow-hidden rounded-t-full rounded-b-full">
+                <Image
+                  src="https://placehold.co/600x600.png"
+                  alt="Sarika"
+                  fill
+                  className="object-cover"
+                  data-ai-hint="indian bride"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-6">
+              <HeartIcon className="w-12 h-12 text-primary" />
+              <h3 className="font-serif text-4xl md:text-5xl">A word from Sarika</h3>
+              <p className="text-muted-foreground text-lg">
+                "Finding Arjun has been like discovering a song I didn't know my soul was singing. With every passing day, my love for him grows deeper, and I cannot wait to start our forever symphony. He is my anchor, my confidant, and my greatest adventure."
+              </p>
+            </div>
+          </div>
+
+          {/* Groom's Message */}
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="flex flex-col gap-6 md:order-1">
+              <HeartIcon className="w-12 h-12 text-primary" />
+              <h3 className="font-serif text-4xl md:text-5xl">A word from Arjun</h3>
+              <p className="text-muted-foreground text-lg">
+                "Sarika is the calm to my storm and the laughter that fills my days. She is more than I ever dreamed of, and I am endlessly grateful for her love. I promise to cherish her, to support her, and to love her unconditionally for all of my days."
+              </p>
+            </div>
+            <div className="relative h-[500px] md:h-[600px] md:order-2">
+               <div className="absolute top-0 right-0 w-3/4 h-full bg-secondary/30 rounded-t-full rounded-b-full transform translate-x-1/4"></div>
+              <div className="absolute bottom-0 right-1/4 w-3/4 h-3/4 overflow-hidden rounded-t-full rounded-b-full">
+                <Image
+                  src="https://placehold.co/600x600.png"
+                  alt="Arjun"
+                  fill
+                  className="object-cover"
+                  data-ai-hint="indian groom"
+                />
               </div>
             </div>
           </div>

@@ -112,7 +112,7 @@ const galleryImages = [
 ];
 
 const Countdown = () => {
-  const weddingDate = '2024-11-23T16:00:00';
+  const weddingDate = '2025-11-23T16:00:00';
   const calculateTimeLeft = () => {
     const difference = +new Date(weddingDate) - +new Date();
     let timeLeft = {};
@@ -142,7 +142,7 @@ const Countdown = () => {
   const timerComponents: JSX.Element[] = [];
 
   Object.keys(timeLeft).forEach((interval) => {
-    if (!timeLeft[interval as keyof typeof timeLeft]) {
+    if (!timeLeft[interval as keyof typeof timeLeft] && timeLeft[interval as keyof typeof timeLeft] !== 0) {
       return;
     }
 
@@ -291,7 +291,7 @@ export default function Home() {
                 <div className="border-b border-border pb-6">
                   <h3 className="text-2xl font-serif mb-2">The Date & Time</h3>
                   <p className="text-muted-foreground">
-                    Saturday, 23rd November 2024, 4:00 PM Onwards
+                    Saturday, 23rd November 2025, 4:00 PM Onwards
                   </p>
                 </div>
                 <div className="border-b border-border pb-6">

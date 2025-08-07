@@ -111,7 +111,7 @@ export default function RsvpPage() {
           <div className="grid md:grid-cols-2 gap-16 items-start">
             <div className="w-full h-full relative aspect-[4/5]">
               <Image
-                src="https://placehold.co/600x750.png"
+                src="https://i.ibb.co/9mXMkDbP/Whats-App-Image-2025-08-06-at-15-24-45-1.jpg"
                 alt="Bride and Groom"
                 fill
                 className="object-cover rounded-lg"

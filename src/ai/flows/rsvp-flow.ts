@@ -9,6 +9,8 @@
 import { ai } from '@/ai/genkit';
 import { rsvpFormSchema } from '@/lib/schemas';
 import { z } from 'genkit';
+import { appendFile, stat } from 'fs/promises';
+import { join } from 'path';
 
 export type RsvpFormValues = z.infer<typeof rsvpFormSchema>;
 
@@ -23,8 +25,17 @@ const rsvpFlow = ai.defineFlow(
     outputSchema: z.void(),
   },
   async (input) => {
-    // In a real application, you would store this data in a database.
-    // For this example, we'll just log it to the console.
-    console.log('New RSVP submission:', input);
+    const filePath = join(process.cwd(), 'rsvps.csv');
+    const headers = 'Name,Email,Phone,Attending,Guests,Blessing\n';
+    const row = `"${input.name}","${input.email}","${input.phone}","${input.attending}","${input.guests || '0'}","${input.blessing.replace(/"/g, '""')}"\n`;
+
+    try {
+      await stat(filePath);
+    } catch (error) {
+      // File doesn't exist, create it with headers
+      await appendFile(filePath, headers);
+    }
+
+    await appendFile(filePath, row);
   }
 );

@@ -98,7 +98,14 @@ async function sendEmails(guestData: RsvpFormValues, totalGuests: number): Promi
   };
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:9002'}/api/send-emails`, {
+    // const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:9002' || 'https://eternalechoes.app.n8n.cloud/webhook-test/a61633c3-1d30-4835-9813-69b24863f606'}/api/send-emails`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(emailData),
+    // });
+    const response = await fetch('https://eternalechoes.app.n8n.cloud/webhook/rsvp/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -23,6 +23,70 @@ export async function submitRsvp(input: RsvpFormValues): Promise<void> {
   await rsvpFlow(input);
 }
 
+// const rsvpFlow = ai.defineFlow(
+//   {
+//     name: 'rsvpFlow',
+//     inputSchema: rsvpFormSchema,
+//     outputSchema: z.void(),
+//   },
+//   async (input) => {
+//     const filePath = join(process.cwd(), 'rsvps.csv');
+//     const headers = 'Name,Email,Phone,Attending,Guests,Blessing\n';
+//     const row = `"${input.name}","${input.email}","${input.phone}","${input.attending}","${input.guests || '0'}","${input.blessing.replace(/"/g, '""')}"\n`;
+
+//     try {
+//       await stat(filePath);
+//     } catch (error) {
+//       // File doesn't exist, create it with headers
+//       await appendFile(filePath, headers);
+//     }
+
+//     await appendFile(filePath, row);
+
+//     // Send emails after successful CSV update
+//     try {
+//       // Get total guest count
+//       const totalGuests = await getTotalGuestCount(filePath);
+      
+//       // Send emails using client-side EmailJS
+//       await sendEmails(input, totalGuests);
+//     } catch (emailError) {
+//       console.error('Email sending failed:', emailError);
+//       // Don't throw error to prevent RSVP submission failure
+//     }
+//   }
+// );
+
+// async function getTotalGuestCount(filePath: string): Promise<number> {
+//   try {
+//     const fileContent = await readFile(filePath, 'utf-8');
+//     const lines = fileContent.trim().split('\n');
+    
+//     let totalCount = 0;
+    
+//     // Skip header row
+//     for (let i = 1; i < lines.length; i++) {
+//       const line = lines[i];
+//       if (line.trim()) {
+//         // Parse CSV row - attending is at index 3, guests at index 4
+//         const matches = line.match(/"([^"]*)"/g);
+//         if (matches && matches.length >= 5) {
+//           const attending = matches[3].replace(/"/g, '');
+//           const guests = parseInt(matches[4].replace(/"/g, '') || '0');
+          
+//           if (attending.toLowerCase() === 'yes') {
+//             totalCount += 1 + guests; // +1 for the main guest, +guests for additional
+//           }
+//         }
+//       }
+//     }
+    
+//     return totalCount;
+//   } catch (error) {
+//     console.error('Error calculating total guests:', error);
+//     return 0;
+//   }
+// }
 const rsvpFlow = ai.defineFlow(
   {
     name: 'rsvpFlow',
@@ -30,25 +94,17 @@ const rsvpFlow = ai.defineFlow(
     outputSchema: z.void(),
   },
   async (input) => {
-    const filePath = join(process.cwd(), 'rsvps.csv');
-    const headers = 'Name,Email,Phone,Attending,Guests,Blessing\n';
-    const row = `"${input.name}","${input.email}","${input.phone}","${input.attending}","${input.guests || '0'}","${input.blessing.replace(/"/g, '""')}"\n`;
-
     try {
-      await stat(filePath);
-    } catch (error) {
-      // File doesn't exist, create it with headers
-      await appendFile(filePath, headers);
-    }
+      // Parse guests (string → number, default 0 if invalid)
+      const guests = parseInt(input.guests || '0', 10) || 0;
 
-    await appendFile(filePath, row);
+      // Compute total guests
+      let totalGuests = 0;
+      if (input.attending.toLowerCase() === 'yes') {
+        totalGuests = 1 + guests; // +1 for main guest
+      }
 
-    // Send emails after successful CSV update
-    try {
-      // Get total guest count
-      const totalGuests = await getTotalGuestCount(filePath);
-      
-      // Send emails using client-side EmailJS
+      // Send emails
       await sendEmails(input, totalGuests);
     } catch (emailError) {
       console.error('Email sending failed:', emailError);
@@ -56,37 +112,6 @@ const rsvpFlow = ai.defineFlow(
     }
   }
 );
-
-async function getTotalGuestCount(filePath: string): Promise<number> {
-  try {
-    const fileContent = await readFile(filePath, 'utf-8');
-    const lines = fileContent.trim().split('\n');
-    
-    let totalCount = 0;
-    
-    // Skip header row
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i];
-      if (line.trim()) {
-        // Parse CSV row - attending is at index 3, guests at index 4
-        const matches = line.match(/"([^"]*)"/g);
-        if (matches && matches.length >= 5) {
-          const attending = matches[3].replace(/"/g, '');
-          const guests = parseInt(matches[4].replace(/"/g, '') || '0');
-          
-          if (attending.toLowerCase() === 'yes') {
-            totalCount += 1 + guests; // +1 for the main guest, +guests for additional
-          }
-        }
-      }
-    }
-    
-    return totalCount;
-  } catch (error) {
-    console.error('Error calculating total guests:', error);
-    return 0;
-  }
-}
 
 async function sendEmails(guestData: RsvpFormValues, totalGuests: number): Promise<void> {
   // Since we're in a server environment, we'll use fetch to call our API endpoint

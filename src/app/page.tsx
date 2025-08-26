@@ -111,13 +111,72 @@ const galleryImages = [
   },
 ];
 
+// const Countdown = () => {
+//   const weddingDate = '2025-09-23T16:00:00';
+  
+//   const calculateTimeLeft = () => {
+//     const difference = +new Date(weddingDate) - +new Date();
+//     let timeLeft = {};
+
+//     if (difference > 0) {
+//       timeLeft = {
+//         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+//         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+//         minutes: Math.floor((difference / 1000 / 60) % 60),
+//         seconds: Math.floor((difference / 1000) % 60),
+//       };
+//     }
+
+//     return timeLeft;
+//   };
+
+//   const [timeLeft, setTimeLeft] = useState({});
+//   const [isClient, setIsClient] = useState(false);
+
+//   useEffect(() => {
+//     setIsClient(true);
+//     setTimeLeft(calculateTimeLeft());
+    
+//     const timer = setInterval(() => {
+//       setTimeLeft(calculateTimeLeft());
+//     }, 1000);
+
+//     return () => clearInterval(timer);
+//   }, []);
+
+//   if (!isClient) {
+//     return null;
+//   }
+  
+//   const timerComponents: JSX.Element[] = [];
+
+//   Object.keys(timeLeft).forEach((interval) => {
+//     if (!timeLeft[interval as keyof typeof timeLeft] && timeLeft[interval as keyof typeof timeLeft] !== 0) {
+//       return;
+//     }
+
+//     timerComponents.push(
+//       <div key={interval} className="text-center p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+//         <p className="text-4xl md:text-6xl font-semibold">{(timeLeft[interval as keyof typeof timeLeft] || 0).toString().padStart(2, '0')}</p>
+//         <p className="text-sm uppercase tracking-widest">{interval}</p>
+//       </div>
+//     );
+//   });
+
+//   return (
+//     <div className="mt-12 flex justify-start items-center gap-4 md:gap-8">
+//       {timerComponents.length ? timerComponents : <span>Time's up!</span>}
+//     </div>
+//   );
+// };
+
+
 const Countdown = () => {
   const weddingDate = '2025-09-23T16:00:00';
   
   const calculateTimeLeft = () => {
     const difference = +new Date(weddingDate) - +new Date();
     let timeLeft = {};
-
     if (difference > 0) {
       timeLeft = {
         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
@@ -126,7 +185,6 @@ const Countdown = () => {
         seconds: Math.floor((difference / 1000) % 60),
       };
     }
-
     return timeLeft;
   };
 
@@ -136,36 +194,45 @@ const Countdown = () => {
   useEffect(() => {
     setIsClient(true);
     setTimeLeft(calculateTimeLeft());
-    
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
-
     return () => clearInterval(timer);
   }, []);
 
   if (!isClient) {
     return null;
   }
-  
-  const timerComponents: JSX.Element[] = [];
 
+  const timerComponents: JSX.Element[] = [];
   Object.keys(timeLeft).forEach((interval) => {
     if (!timeLeft[interval as keyof typeof timeLeft] && timeLeft[interval as keyof typeof timeLeft] !== 0) {
       return;
     }
-
     timerComponents.push(
-      <div key={interval} className="text-center p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
-        <p className="text-4xl md:text-6xl font-semibold">{(timeLeft[interval as keyof typeof timeLeft] || 0).toString().padStart(2, '0')}</p>
-        <p className="text-sm uppercase tracking-widest">{interval}</p>
+      <div 
+        key={interval} 
+        className="text-center p-2 sm:p-3 md:p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex-1 min-w-0"
+      >
+        <p className="text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold leading-tight">
+          {(timeLeft[interval as keyof typeof timeLeft] || 0).toString().padStart(2, '0')}
+        </p>
+        <p className="text-xs sm:text-sm md:text-base uppercase tracking-wide sm:tracking-widest mt-1">
+          {interval}
+        </p>
       </div>
     );
   });
 
   return (
-    <div className="mt-12 flex justify-start items-center gap-4 md:gap-8">
-      {timerComponents.length ? timerComponents : <span>Time's up!</span>}
+    <div className="mt-6 sm:mt-8 md:mt-12 w-full max-w-4xl mx-auto px-4">
+      <div className="flex justify-center items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-8">
+        {timerComponents.length ? timerComponents : (
+          <div className="text-center p-4 sm:p-6 md:p-8 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+            <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold">Time's up!</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

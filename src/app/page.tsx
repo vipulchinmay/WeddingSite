@@ -590,6 +590,33 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* YouTube Video Section */}
+      <section className="bg-primary/5 text-foreground py-20 md:py-32">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-sm uppercase tracking-[0.2em] text-primary font-semibold animate-fade-in-up stagger-1">
+            Our Journey
+          </p>
+          <h2 className="font-serif text-5xl md:text-7xl mt-4 animate-fade-in-up stagger-2">
+            Watch Our Story
+          </h2>
+          <p className="text-muted-foreground mt-4 max-w-2xl mx-auto animate-fade-in-up stagger-3">
+            Join us as we share the beautiful moments leading up to our special day.
+          </p>
+          <div className="mt-12 aspect-video w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-2xl border animate-scale-in stagger-4 hover-lift">
+            <iframe
+              src="https://www.youtube.com/embed/XrFBdwn2x-s"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen={true}
+              loading="lazy"
+              title="Tejaswini & Hrishi's Wedding Story"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            ></iframe>
+          </div>
+        </div>
+      </section>
       
       <section className="bg-secondary/30 text-foreground py-20 md:py-32">
         <div className="container mx-auto px-4 text-center">

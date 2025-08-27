@@ -53,7 +53,7 @@ export function Footer() {
       <div className="container mx-auto px-4 flex flex-col items-center text-center">
         <h3 className="font-serif text-3xl">EternalEchoes</h3>
         <p className="text-primary-foreground/80 mt-2">
-          Celebrating Sarika & Arjun
+          Celebrating Tejaswini & Hrishi
         </p>
         <div className="flex space-x-6 mt-6">
           <Button variant="link" className="text-primary-foreground" onClick={scrollToTop}>Home</Button>
@@ -62,10 +62,10 @@ export function Footer() {
           </Link>
         </div>
         <div className="flex space-x-6 mt-6">
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/eternalechoes.space/" target="_blank" rel="noopener noreferrer">
             <InstagramIcon className="h-6 w-6 text-primary-foreground/80 hover:text-primary-foreground transition-colors" />
           </a>
-          <a href="mailto:info@eternalechoes.com">
+          <a href="eternalechosofficial@gmail.com">
             <MailIcon className="h-6 w-6 text-primary-foreground/80 hover:text-primary-foreground transition-colors" />
           </a>
         </div>

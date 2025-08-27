@@ -63,8 +63,8 @@ export async function POST(request: NextRequest) {
         evening_time: '7:00 PM - 11:00 PM',
         morning_dress_code: 'Traditional/Ethnic wear preferred. Think vibrant colors like royal blue, emerald green, or deep maroon. Avoid white and black.',
         evening_dress_code: 'Semi-formal to formal attire. Cocktail dresses, suits, or elegant ethnic wear. Metallics and jewel tones are perfect!',
-        bride_name: 'Sarika', // Replace with actual names
-        groom_name: 'Arjun', // Replace with actual names
+        bride_name: 'Tejaswini', // Replace with actual names
+        groom_name: 'Hrishi', // Replace with actual names
         coordinator_name: 'Vipul', // Replace with actual coordinator
         coordinator_phone: '+91 98765 43210',
         coordinator_email: 'vipul@example.com',

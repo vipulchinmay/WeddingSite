@@ -778,7 +778,7 @@ export default function Home() {
             Our Journey
           </p>
           <h2 className="font-serif text-5xl md:text-7xl mt-4 animate-fade-in-up stagger-2">
-            Watch Our Story
+            Watch Our Engagement
           </h2>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto animate-fade-in-up stagger-3">
             Join us as we share the beautiful moments leading up to our special day.

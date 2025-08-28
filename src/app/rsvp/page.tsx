@@ -30,7 +30,166 @@ import { RsvpFormValues, submitRsvp } from '@/ai/flows/rsvp-flow';
 import { useToast } from '@/hooks/use-toast';
 import { Toaster } from '@/components/ui/toaster';
 import { rsvpFormSchema } from '@/lib/schemas';
+import { useEffect, useRef } from 'react';
 
+const MusicPlayer = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.3);
+  const [showVolumeSlider, setShowVolumeSlider] = useState(false);
+  const [audioError, setAudioError] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  // Your wedding music URL
+  const musicUrl = "https://stale-indigo-cxingwaiyv.edgeone.app/Vachindamma-Vachindamma.mp3";
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+      audioRef.current.loop = true;
+      
+      // Add error handling
+      const handleError = () => {
+        console.log('Audio failed to load');
+        setAudioError(true);
+        setIsPlaying(false);
+      };
+
+      const handleCanPlay = () => {
+        setAudioError(false);
+      };
+
+      audioRef.current.addEventListener('error', handleError);
+      audioRef.current.addEventListener('canplay', handleCanPlay);
+
+      return () => {
+        if (audioRef.current) {
+          audioRef.current.removeEventListener('error', handleError);
+          audioRef.current.removeEventListener('canplay', handleCanPlay);
+        }
+      };
+    }
+  }, [volume]);
+
+  const toggleMusic = async () => {
+    if (!audioRef.current) return;
+    
+    try {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        // Reset error state before trying to play
+        setAudioError(false);
+        await audioRef.current.play();
+        setIsPlaying(true);
+      }
+    } catch (error) {
+      console.log('Audio playback failed:', error);
+      setAudioError(true);
+      setIsPlaying(false);
+    }
+  };
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
+    }
+  };
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2">
+      {/* Volume Slider */}
+      <div 
+        className={`transition-all duration-300 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-2 ${
+          showVolumeSlider ? 'opacity-100 transform translate-x-0' : 'opacity-0 transform translate-x-4 pointer-events-none'
+        }`}
+      >
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.1"
+          value={volume}
+          onChange={handleVolumeChange}
+          className="w-20 h-1 bg-white/20 rounded-lg appearance-none cursor-pointer"
+          style={{
+            background: `linear-gradient(to right, #ffffff ${volume * 100}%, rgba(255,255,255,0.2) ${volume * 100}%)`
+          }}
+        />
+      </div>
+
+      {/* Music Control Button */}
+      <button
+        onClick={toggleMusic}
+        onMouseEnter={() => setShowVolumeSlider(true)}
+        onMouseLeave={() => setShowVolumeSlider(false)}
+        className={`group w-14 h-14 bg-gradient-to-br from-primary/80 to-primary backdrop-blur-sm border border-white/20 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all duration-300 hover:shadow-xl animate-float ${
+          audioError ? 'opacity-50 cursor-not-allowed' : ''
+        }`}
+        aria-label={isPlaying ? "Pause music" : "Play music"}
+        disabled={audioError}
+      >
+        {audioError ? (
+          // Error Icon
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="text-white"
+          >
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+        ) : isPlaying ? (
+          // Pause Icon
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="text-white animate-pulse"
+          >
+            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+          </svg>
+        ) : (
+          // Play Icon
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="text-white ml-1"
+          >
+            <path d="M8 5v14l11-7L8 5z" />
+          </svg>
+        )}
+        
+        {/* Ripple effect when playing */}
+        {isPlaying && !audioError && (
+          <>
+            <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping"></div>
+            <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping" style={{ animationDelay: '0.5s' }}></div>
+          </>
+        )}
+      </button>
+
+      {/* Hidden Audio Element */}
+      <audio
+        ref={audioRef}
+        preload="metadata"
+        crossOrigin="anonymous"
+      >
+        <source src="./audio/Vachindamma-Vachindamma.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+  );
+};
 
 const initialBlessings = [
   {
@@ -289,7 +448,10 @@ export default function RsvpPage() {
           </div>
         </div>
       </div>
+      <div>
       <Footer />
+      </div>
+      <MusicPlayer/>
     </>
   );
 }
